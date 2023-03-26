@@ -45,6 +45,7 @@ server.use(
   cors({
     origin: [
       "https://dorfville.cyclic.app",
+      "https://dorfvilleadmin.netlify.app",
       "http://localhost:3001",
       "http://localhost:3000",
     ],
