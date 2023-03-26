@@ -31,6 +31,6 @@ Router.post("/", validateUser, upload.single("image"), addPost);
 Router.get("/", getPosts);
 Router.get("/:id", getPost);
 Router.delete("/:id", validateUser, deletePost);
-Router.put("/:id", upload.single("image"), updatePost);
+Router.post("/:id", upload.single("image"), updatePost);
 
 module.exports = Router;

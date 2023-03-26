@@ -1,7 +1,7 @@
 const { urlencoded } = require("express");
+const cors = require("cors");
 const express = require("express");
 const session = require("express-session");
-const cors = require("cors");
 const MongoStore = require("connect-mongo");
 
 const PORT = process.env.PORT || 5000;
@@ -21,7 +21,7 @@ const server = express();
 
 server.use(express.json());
 server.use(express.urlencoded({ extended: false }));
-// server.set("trust proxy", 1); // trust first proxy
+server.set("trust proxy", 1); // trust first proxy
 
 server.use(
   session({
@@ -41,21 +41,21 @@ server.use(
   })
 );
 
-// var whitelist = [
-//   "https://dorfville.cyclic.app",
-//   "https://dorfvilleadmin.netlify.app",
-//   "http://localhost:3001",
-//   "http://localhost:3000",
-// ];
-// var corsOptions = {
-//   origin: whitelist,
-//   methods: ["POST", "PUT", "GET", "PATCH", "OPTIONS", "HEAD", "DELETE"],
-//   allowedHeaders: ["Content-Type", "Authorization"],
-//   preflightContinue: true,
-//   secure: true,
-// };
+var whitelist = [
+  "https://dorfville.cyclic.app",
+  "https://dorfvilleadmin.netlify.app",
+  "http://localhost:3001",
+  "http://localhost:3000",
+];
+var corsOptions = {
+  origin: whitelist,
+  methods: ["POST", "PUT", "GET", "PATCH", "OPTIONS", "HEAD", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  preflightContinue: true,
+  secure: true,
+};
 
-server.use(cors());
+server.use(cors(corsOptions));
 server.use("/auth", authRouter);
 server.use("/api", userRouter);
 server.use("/posts", postRouter);
