@@ -51,6 +51,8 @@ var corsOptions = {
   origin: whitelist,
   methods: ["POST", "PUT", "GET", "PATCH", "OPTIONS", "HEAD", "DELETE"],
   credentials: true,
+  allowedHeaders: ["Content-Type", "Authorization"],
+  preflightContinue: true,
 };
 
 server.use(cors(corsOptions));
