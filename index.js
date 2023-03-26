@@ -52,7 +52,6 @@ var corsOptions = {
   methods: ["POST", "PUT", "GET", "PATCH", "OPTIONS", "HEAD", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"],
   preflightContinue: true,
-  secure: true,
 };
 
 server.use(cors(corsOptions));
