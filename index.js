@@ -18,7 +18,7 @@ const careerRouter = require("./src/routes/career");
 const dashboardRouter = require("./src/routes/dashboard");
 
 const server = express();
-
+server.use(cors());
 server.use(express.json());
 server.use(express.urlencoded({ extended: false }));
 server.set("trust proxy", 1); // trust first proxy
@@ -56,7 +56,6 @@ var whitelist = [
 //   secure: true,
 // };
 
-server.use(cors());
 server.use("/auth", authRouter);
 server.use("/api", userRouter);
 server.use("/posts", postRouter);
