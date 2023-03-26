@@ -119,7 +119,7 @@ const updatePost = async (req, res) => {
     const updatedPost = await post.save();
     res.header(
       "Access-Control-Allow-Origin",
-      "https://dorfvilleadmin.netlify.app/"
+      "https://dorfvilleadmin.netlify.app"
     );
     res.json(updatedPost);
   } catch (err) {
