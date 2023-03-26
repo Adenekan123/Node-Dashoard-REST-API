@@ -16,7 +16,10 @@ const addPost = async (req, res) => {
       },
     });
     const savedPost = await newposts.save();
-    res.header("Access-Control-Allow-Origin", "https://dorfville.cyclic.app");
+    res.header(
+      "Access-Control-Allow-Origin",
+      "https://dorfvilleadmin.netlify.app"
+    );
     res.status(201).json(savedPost);
   } catch (err) {
     console.log(err);
@@ -39,7 +42,10 @@ const getPosts = async (req, res) => {
       }
       return item;
     });
-    res.header("Access-Control-Allow-Origin", "https://dorfville.cyclic.app");
+    res.header(
+      "Access-Control-Allow-Origin",
+      "https://dorfvilleadmin.netlify.app"
+    );
     res.status(200).json(data);
   } catch (e) {
     console.log(e);
@@ -54,7 +60,10 @@ const getPost = async (req, res, next) => {
     if (!post) {
       return res.status(404).json({ message: "Post not found" });
     }
-    res.header("Access-Control-Allow-Origin", "https://dorfville.cyclic.app");
+    res.header(
+      "Access-Control-Allow-Origin",
+      "https://dorfvilleadmin.netlify.app"
+    );
     res.json([post]);
   } catch (err) {
     console.error(err);
@@ -74,7 +83,10 @@ const deletePost = async (req, res) => {
 
     // Delete the post and return a success message
     const removedpost = await post.remove();
-    res.header("Access-Control-Allow-Origin", "https://dorfville.cyclic.app");
+    res.header(
+      "Access-Control-Allow-Origin",
+      "https://dorfvilleadmin.netlify.app"
+    );
     res.json(removedpost);
   } catch (error) {
     console.error(error);
@@ -105,8 +117,10 @@ const updatePost = async (req, res) => {
     }
 
     const updatedPost = await post.save();
-    res.header("Access-Control-Allow-Origin", "https://dorfville.cyclic.app");
-
+    res.header(
+      "Access-Control-Allow-Origin",
+      "https://dorfvilleadmin.netlify.app"
+    );
     res.json(updatedPost);
   } catch (err) {
     console.error(err);
