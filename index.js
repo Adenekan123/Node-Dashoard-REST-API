@@ -29,7 +29,7 @@ server.use(
     resave: true,
     saveUninitialized: false,
     store: new MongoStore({
-      mongoUrl: "mongodb://localhost:27017/dashboard",
+      mongoUrl: process.env.MONGO_URI || "mongodb://localhost:27017/dashboard",
       ttl: 24 * 60 * 60,
       autoRemove: "native",
     }),
@@ -41,17 +41,24 @@ server.use(
   })
 );
 
-server.use(
-  cors({
-    origin: [
-      "https://dorfville.cyclic.app",
-      "http://localhost:3001",
-      "http://localhost:3000",
-    ],
-    methods: ["POST", "PUT", "GET", "PATCH", "OPTIONS", "HEAD", "DELETE"],
-    credentials: true,
-  })
-);
+var whitelist = [
+  "https://dorfville.cyclic.app",
+  "http://localhost:3001",
+  "http://localhost:3000",
+];
+var corsOptions = {
+  origin: function (origin, callback) {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  methods: ["POST", "PUT", "GET", "PATCH", "OPTIONS", "HEAD", "DELETE"],
+  credentials: true,
+};
+
+server.use(cors(corsOptions));
 server.use("/auth", authRouter);
 server.use("/api", userRouter);
 server.use("/posts", postRouter);
