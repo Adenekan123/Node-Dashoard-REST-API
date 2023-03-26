@@ -22,7 +22,6 @@ const server = express();
 server.use(express.json());
 server.use(express.urlencoded({ extended: false }));
 server.set("trust proxy", 1); // trust first proxy
-
 server.use(
   session({
     secret: KEY,
