@@ -41,21 +41,21 @@ server.use(
   })
 );
 
-var whitelist = [
-  "https://dorfville.cyclic.app",
-  "https://dorfvilleadmin.netlify.app",
-  "http://localhost:3001",
-  "http://localhost:3000",
-];
-var corsOptions = {
-  origin: whitelist,
-  methods: ["POST", "PUT", "GET", "PATCH", "OPTIONS", "HEAD", "DELETE"],
-  allowedHeaders: ["Content-Type", "Authorization"],
-  preflightContinue: true,
-  secure: true,
-};
+// var whitelist = [
+//   "https://dorfville.cyclic.app",
+//   "https://dorfvilleadmin.netlify.app",
+//   "http://localhost:3001",
+//   "http://localhost:3000",
+// ];
+// var corsOptions = {
+//   origin: whitelist,
+//   methods: ["POST", "PUT", "GET", "PATCH", "OPTIONS", "HEAD", "DELETE"],
+//   allowedHeaders: ["Content-Type", "Authorization"],
+//   preflightContinue: true,
+//   secure: true,
+// };
 
-server.use(cors(corsOptions));
+server.use(cors());
 server.use("/auth", authRouter);
 server.use("/api", userRouter);
 server.use("/posts", postRouter);
