@@ -43,7 +43,11 @@ server.use(
 
 server.use(
   cors({
-    origin: ["http://localhost:3001", "http://localhost:3000"],
+    origin: [
+      "https://dorfville.cyclic.app",
+      "http://localhost:3001",
+      "http://localhost:3000",
+    ],
     methods: ["POST", "PUT", "GET", "PATCH", "OPTIONS", "HEAD", "DELETE"],
     credentials: true,
   })
