@@ -7,7 +7,7 @@ const MongoStore = require("connect-mongo");
 const PORT = process.env.PORT || 5000;
 const KEY = process.env.SECRET_KEY || "secretekey";
 
-require("./db/connection");
+const connectDB = require("./db/connection");
 
 //routes
 const authRouter = require("./src/routes/auth");
@@ -55,6 +55,12 @@ server.use("/farmvisits", farmvisitRouter);
 server.use("/career", careerRouter);
 server.use("/dashboard", dashboardRouter);
 
-server.listen(PORT, () => {
-  console.log(`listening on port ${PORT}`);
+// server.listen(PORT, () => {
+//   console.log(`listening on port ${PORT}`);
+// });
+
+connectDB().then(() => {
+  server.listen(PORT, () => {
+    console.log(`listening for requests on port ${PORT}`);
+  });
 });
