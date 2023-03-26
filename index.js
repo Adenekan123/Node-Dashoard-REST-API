@@ -29,7 +29,7 @@ server.use(
     resave: true,
     saveUninitialized: false,
     store: new MongoStore({
-      mongoUrl: "mongodb://localhost:27017/dashboard",
+      mongoUrl: process.env.MONGO_URI || "mongodb://localhost:27017/dashboard",
       ttl: 24 * 60 * 60,
       autoRemove: "native",
     }),
