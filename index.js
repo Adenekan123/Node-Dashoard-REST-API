@@ -53,6 +53,7 @@ var corsOptions = {
   credentials: true,
   allowedHeaders: ["Content-Type", "Authorization"],
   preflightContinue: true,
+  secure: true,
 };
 
 server.use(cors(corsOptions));
