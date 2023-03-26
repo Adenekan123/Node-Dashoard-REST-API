@@ -9,6 +9,7 @@ const userSchema = new mongoose.Schema({
   firstname: {
     type: String,
     trim: true,
+    required: true,
   },
   lastname: {
     type: String,
@@ -52,8 +53,9 @@ const userSchema = new mongoose.Schema({
   },
 });
 
-userSchema.statics.findByCredentials = async ({ email, password }) => {
-  const user = await User.findOne({ email });
+userSchema.statics.findByCredentials = async function ({ email, password }) {
+  const user = await this.findOne({ email });
+  console.log(user);
   if (!user) throw new Error(`User does not exist`);
   const isMatch = await bcrypt.compare(password, user.password);
 
