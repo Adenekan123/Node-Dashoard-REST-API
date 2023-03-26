@@ -1,5 +1,6 @@
 const { urlencoded } = require("express");
 const cors = require("cors");
+const xss = require("xss-clean");
 const helmet = require("helmet");
 const express = require("express");
 const session = require("express-session");
@@ -41,21 +42,29 @@ server.use(
   })
 );
 
-var whitelist = [
-  "https://dorfville.cyclic.app",
-  "https://dorfvilleadmin.netlify.app",
-  "http://localhost:3001",
-  "http://localhost:3000",
-];
-var corsOptions = {
-  origin: whitelist,
-  methods: ["POST", "PUT", "GET", "PATCH", "OPTIONS", "HEAD", "DELETE"],
-  allowedHeaders: ["Content-Type", "Authorization"],
-  preflightContinue: true,
-};
+// var whitelist = [
+//   "https://dorfville.cyclic.app",
+//   "https://dorfvilleadmin.netlify.app",
+//   "http://localhost:3001",
+//   "http://localhost:3000",
+// ];
+// var corsOptions = {
+//   origin: whitelist,
+//   methods: ["POST", "PUT", "GET", "PATCH", "OPTIONS", "HEAD", "DELETE"],
+// };
 
-server.use(cors(corsOptions));
+server.use(cors());
 server.use(helmet());
+app.use(xss());
+app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  res.header("Access-Control-Expose-Headers", "X-Total-Count, Content-Range");
+  next();
+});
 server.use("/auth", authRouter);
 server.use("/api", userRouter);
 server.use("/posts", postRouter);
