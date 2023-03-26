@@ -1,5 +1,6 @@
 const { urlencoded } = require("express");
 const cors = require("cors");
+const helmet = require("helmet");
 const express = require("express");
 const session = require("express-session");
 const MongoStore = require("connect-mongo");
@@ -18,7 +19,6 @@ const careerRouter = require("./src/routes/career");
 const dashboardRouter = require("./src/routes/dashboard");
 
 const server = express();
-
 server.use(express.json());
 server.use(express.urlencoded({ extended: false }));
 server.set("trust proxy", 1); // trust first proxy
@@ -55,6 +55,7 @@ var corsOptions = {
 };
 
 server.use(cors(corsOptions));
+server.use(helmet());
 server.use("/auth", authRouter);
 server.use("/api", userRouter);
 server.use("/posts", postRouter);
