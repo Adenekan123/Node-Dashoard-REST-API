@@ -18,7 +18,7 @@ const careerRouter = require("./src/routes/career");
 const dashboardRouter = require("./src/routes/dashboard");
 
 const server = express();
-server.use(cors());
+
 server.use(express.json());
 server.use(express.urlencoded({ extended: false }));
 server.set("trust proxy", 1); // trust first proxy
@@ -47,15 +47,15 @@ var whitelist = [
   "http://localhost:3001",
   "http://localhost:3000",
 ];
-// var corsOptions = {
-//   origin: whitelist,
-//   methods: ["POST", "PUT", "GET", "PATCH", "OPTIONS", "HEAD", "DELETE"],
-//   credentials: true,
-//   allowedHeaders: ["Content-Type", "Authorization"],
-//   preflightContinue: true,
-//   secure: true,
-// };
+var corsOptions = {
+  origin: whitelist,
+  methods: ["POST", "PUT", "GET", "PATCH", "OPTIONS", "HEAD", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  preflightContinue: true,
+  secure: true,
+};
 
+server.use(cors(corsOptions));
 server.use("/auth", authRouter);
 server.use("/api", userRouter);
 server.use("/posts", postRouter);
