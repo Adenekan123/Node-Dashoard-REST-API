@@ -35,9 +35,9 @@ server.use(
       autoRemove: "native",
     }),
     cookie: {
-      httpOnly: true,
+      httpOnly: false,
       maxAge: 1000 * 24 * 60 * 60,
-      secure: false,
+      secure: true,
     },
   })
 );
