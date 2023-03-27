@@ -55,8 +55,8 @@ server.use(
 
 server.use(cors());
 server.use(helmet());
-app.use(xss());
-app.use(function (req, res, next) {
+server.use(xss());
+server.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header(
     "Access-Control-Allow-Headers",
