@@ -20,7 +20,7 @@ const careerRouter = require("./src/routes/career");
 const dashboardRouter = require("./src/routes/dashboard");
 
 const server = express();
-server.use(cors({ origin: [process.env.ADMIN_URL, process.env.CLIENT_URL] }));
+server.use(cors({ origin: process.env.ADMIN_URL }));
 server.use(express.json());
 server.use(express.urlencoded({ extended: false }));
 
