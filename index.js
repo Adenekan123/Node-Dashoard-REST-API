@@ -22,7 +22,7 @@ const dashboardRouter = require("./src/routes/dashboard");
 console.log(process.env.ADMIN_URL);
 
 const server = express();
-server.use(cors({ origin: process.env.ADMIN_URL }));
+server.use(cors({ origin: process.env.ADMIN_URL,optionsSuccessStatus: 200 }));
 server.use(express.json());
 server.use(express.urlencoded({ extended: false }));
 
