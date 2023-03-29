@@ -35,7 +35,7 @@ const login = async function (req, res) {
       role: "admin",
     };
     const token = jwt.sign(payload, "secretekey");
-    req.session.user = token;
+    // req.session.user = token;
 
     res.status(200).json(token);
   } catch (err) {

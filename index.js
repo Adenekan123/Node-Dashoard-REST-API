@@ -3,11 +3,11 @@ const cors = require("cors");
 const xss = require("xss-clean");
 const helmet = require("helmet");
 const express = require("express");
-const session = require("express-session");
-const MongoStore = require("connect-mongo");
+// const session = require("express-session");
+// const MongoStore = require("connect-mongo");
 
 const PORT = process.env.PORT || 5000;
-const KEY = process.env.SECRET_KEY || "secretekey";
+// const KEY = process.env.SECRET_KEY || "secretekey";
 
 const connectDB = require("./db/connection");
 
@@ -20,27 +20,27 @@ const careerRouter = require("./src/routes/career");
 const dashboardRouter = require("./src/routes/dashboard");
 
 const server = express();
+server.use(cors({ origin: [process.env.ADMIN_URL, process.env.CLIENT_URL] }));
 server.use(express.json());
 server.use(express.urlencoded({ extended: false }));
-server.set("trust proxy", 1); // trust first proxy
 
-server.use(
-  session({
-    secret: KEY,
-    resave: true,
-    saveUninitialized: false,
-    store: new MongoStore({
-      mongoUrl: process.env.MONGO_URI || "mongodb://localhost:27017/dashboard",
-      ttl: 24 * 60 * 60,
-      autoRemove: "native",
-    }),
-    cookie: {
-      httpOnly: false,
-      maxAge: 1000 * 24 * 60 * 60,
-      secure: true,
-    },
-  })
-);
+// server.use(
+//   session({
+//     secret: KEY,
+//     resave: true,
+//     saveUninitialized: false,
+//     store: new MongoStore({
+//       mongoUrl: process.env.MONGO_URI || "mongodb://localhost:27017/dashboard",
+//       ttl: 24 * 60 * 60,
+//       autoRemove: "native",
+//     }),
+//     cookie: {
+//       httpOnly: false,
+//       maxAge: 1000 * 24 * 60 * 60,
+//       secure: true,
+//     },
+//   })
+// );
 
 // var whitelist = [
 //   "https://dorfville.cyclic.app",
@@ -53,7 +53,6 @@ server.use(
 //   methods: ["POST", "PUT", "GET", "PATCH", "OPTIONS", "HEAD", "DELETE"],
 // };
 
-server.use(cors());
 server.use(helmet());
 server.use(xss());
 server.use(function (req, res, next) {
