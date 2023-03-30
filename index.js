@@ -19,8 +19,6 @@ const farmvisitRouter = require("./src/routes/farmvisit");
 const careerRouter = require("./src/routes/career");
 const dashboardRouter = require("./src/routes/dashboard");
 
-console.log(process.env.ADMIN_URL);
-
 const server = express();
 server.use(cors({ origin: process.env.ADMIN_URL }));
 server.use(express.json());

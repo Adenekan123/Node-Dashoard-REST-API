@@ -26,7 +26,6 @@ const register = async function (req, res) {
 //login
 const login = async function (req, res) {
   try {
-    console.log(req.body);
     const user = await User.findByCredentials(req.body);
     if (!user) throw new Error("Invalid credentials");
 
