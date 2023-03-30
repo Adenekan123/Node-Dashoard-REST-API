@@ -39,7 +39,7 @@ const login = async function (req, res) {
     res.status(200).json(token);
   } catch (err) {
     console.log(err);
-    res.status(500).json(err);
+    res.status(500).json(err.message);
   }
 };
 
