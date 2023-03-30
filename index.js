@@ -22,7 +22,11 @@ const dashboardRouter = require("./src/routes/dashboard");
 const server = express();
 server.use(
   cors({
-    origin: [process.env.ADMIN_URL, process.env.CLIENT_URL],
+    origin: [
+      process.env.ADMIN_URL,
+      process.env.CLIENT_URL,
+      "http://localhost:5500",
+    ],
     optionsSuccessStatus: 200,
   })
 );
