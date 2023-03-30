@@ -25,7 +25,7 @@ server.use(
     origin: [
       process.env.ADMIN_URL,
       process.env.CLIENT_URL,
-      "http://localhost:5500",
+      "http://121.0.0.1:5500",
     ],
     optionsSuccessStatus: 200,
   })
