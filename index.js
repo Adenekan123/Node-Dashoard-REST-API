@@ -20,8 +20,7 @@ const careerRouter = require("./src/routes/career");
 const dashboardRouter = require("./src/routes/dashboard");
 
 const server = express();
-app.options('*', cors()) // include before other routes
-server.use(cors({ origin: process.env.ADMIN_URL,optionsSuccessStatus: 200 }));
+server.use(cors({ origin: process.env.ADMIN_URL, optionsSuccessStatus: 200 }));
 server.use(express.json());
 server.use(express.urlencoded({ extended: false }));
 
