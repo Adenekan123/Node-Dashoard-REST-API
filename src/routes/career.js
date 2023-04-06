@@ -5,11 +5,11 @@ const multer = require("multer");
 const Imagekit = require('imagekit');
 
 
-const imagekit = new Imagekit({
-  publicKey : process.env.IMAGEKIT_PUBLIC,
-  privateKey : process.env.IMAGEKIT_PRIVATE,
-  urlEndpoint : process.env.IMAGEKIT_URL
-})
+// const imagekit = new Imagekit({
+//   publicKey : process.env.IMAGEKIT_PUBLIC,
+//   privateKey : process.env.IMAGEKIT_PRIVATE,
+//   urlEndpoint : process.env.IMAGEKIT_URL
+// })
 
 const storage = multer.diskStorage({
   destination: function (req, file, callback) {
