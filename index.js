@@ -24,8 +24,7 @@ server.use(
   cors({
     origin: [
       process.env.ADMIN_URL,
-      process.env.CLIENT_URL,
-      "http://121.0.0.1:5500",
+      process.env.CLIENT_URL
     ],
     optionsSuccessStatus: 200,
   })
