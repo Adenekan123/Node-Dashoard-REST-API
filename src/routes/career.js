@@ -29,7 +29,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 const uploadFile = (req,res,next) =>{
-  console.log(req.body);
+  console.log(req.files);
 //   imagekit.upload({
 //     file : req.body.cv,
 //     fileName : "my_file_name.jpg",   //required
