@@ -4,7 +4,7 @@ const Career = require("../model/career");
 const addCv = async (req, res) => {
   try {
     const newCv = new Career({
-      cv: req.file.path,
+      cv: req.cvUrl,
     });
     const savedCv = await newCv.save();
     res.status(201).json(savedCv);

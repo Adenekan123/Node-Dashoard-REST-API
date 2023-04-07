@@ -79,9 +79,6 @@ server.use("/farmvisits", farmvisitRouter);
 server.use("/career", careerRouter);
 server.use("/dashboard", dashboardRouter);
 
-// server.listen(PORT, () => {
-//   console.log(`listening on port ${PORT}`);
-// });
 
 connectDB().then(() => {
   server.listen(PORT, () => {

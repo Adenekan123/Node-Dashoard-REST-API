@@ -1,22 +1,40 @@
 const express = require("express");
-const path = require("path");
 const { validateUser } = require("../utils/utils");
 const multer = require("multer");
+const Imagekit = require('imagekit');
 
-const storage = multer.diskStorage({
-  destination: function (req, file, callback) {
-    callback(null, path.join(__dirname, "..", "cvs"));
-  },
-  filename: function (req, file, callback) {
-    callback(null, file.originalname);
-  },
+
+
+const storage = multer.memoryStorage();
+
+const imagekit = new Imagekit({
+  publicKey : process.env.IMAGEKIT_PUBLIC,
+  privateKey : process.env.IMAGEKIT_PRIVATE,
+  urlEndpoint : process.env.IMAGEKIT_URL
 });
-// const upload = multer({
-//   storage: storage,
-//   limits: {
-//     fileSize: 1024 * 1024 * 5, // 5 MB
-//   },
-// });
+
+const uploadToImageKit = async (req,res,next) =>{
+  const file = req.file
+  
+  try{
+    const response = await imagekit.upload({
+      file : file.buffer.toString('base64'), //required
+      fileName : file.originalname,   //required
+      extensions: [
+          {
+              name: "google-auto-tagging",
+              maxTags: 5,
+              minConfidence: 95
+          }
+      ]
+  });
+  req.cvUrl = response.url;
+  next();
+  }catch(err){
+    console.log(err)
+    res.json(err.message);
+  }
+}
 
 const upload = multer({ storage });
 
@@ -29,7 +47,7 @@ const {
 
 const Router = express.Router();
 
-Router.post("/", upload.single("cv"), addCv);
+Router.post("/", upload.single("cv"),uploadToImageKit,addCv);
 Router.get("/", getCvs);
 Router.get("/:id", getCv);
 Router.delete("/:id", validateUser, deleteCv);
