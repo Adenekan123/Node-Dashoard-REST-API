@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+import User from "../model/user";
 
 // const validateUser = function (req, res, next) {
 //   if (!req.session.user)
@@ -10,7 +11,7 @@ const jwt = require("jsonwebtoken");
 //   next();
 // };
 
-function validateUser(req, res, next) {
+async function validateUser(req, res, next) {
   const authHeader = req.headers.authorization;
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
     return res.status(401).json({ message: "UnAuthorized" });
@@ -24,9 +25,19 @@ function validateUser(req, res, next) {
   // TODO: Verify the token and set the user ID in the request object
   const user = jwt.verify(token, "secretekey");
 
-  req.user = user;
+  try{
+    const is_user = await User.findById(user.id);
+    if(is_user){
+      req.user = user;
+      next();
+    }else throw new Error('UnAuthorized');
 
-  next();
+  }catch(error){
+    return res.status(401).json({ message: error.message });
+
+  }
+  
+ 
 }
 
 module.exports = {
