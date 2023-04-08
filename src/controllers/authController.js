@@ -46,7 +46,6 @@ const login = async function (req, res) {
 //logout
 const logout = async function (req, res) {
   try {
-    await req.session.destroy();
     res.status(200).json();
   } catch (err) {
     res.status(500).json("internal server error");
