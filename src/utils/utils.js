@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-import User from "../model/user";
+const User =  require("../model/user");
 
 // const validateUser = function (req, res, next) {
 //   if (!req.session.user)
