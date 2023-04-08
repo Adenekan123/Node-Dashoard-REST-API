@@ -30,7 +30,7 @@ const login = async function (req, res) {
     if (!user) throw new Error("Invalid credentials");
 
     const payload = {
-      name: user.name,
+      id: user._id,
       role: "admin",
     };
     const token = jwt.sign(payload, "secretekey");
