@@ -26,6 +26,7 @@ server.use(
       process.env.ADMIN_URL,
       process.env.CLIENT_URL
     ],
+    methods: ["POST", "PUT", "GET", "PATCH", "OPTIONS", "HEAD", "DELETE"],
     optionsSuccessStatus: 200,
   })
 );

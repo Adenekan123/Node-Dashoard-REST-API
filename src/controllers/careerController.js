@@ -55,7 +55,7 @@ const deleteCv = async (req, res) => {
     // Check if the post exists
     const cv = await Career.findById(cvid);
     if (!cv) {
-      return res.status(404).json({ message: "Post not found" });
+      return res.status(404).json({ message: "CV not found" });
     }
 
     // Delete the post and return a success message
