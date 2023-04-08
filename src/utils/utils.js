@@ -28,7 +28,7 @@ async function validateUser(req, res, next) {
   try{
     const is_user = await User.findById(user.id);
     if(is_user){
-      req.user = user;
+      req.user = is_user;
       next();
     }else throw new Error('UnAuthorized');
 

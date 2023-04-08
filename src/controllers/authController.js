@@ -34,7 +34,7 @@ const login = async function (req, res) {
       role: "admin",
     };
     const token = jwt.sign(payload, "secretekey");
-    // req.session.user = token;
+    req.user = user;
 
     res.status(200).json(token);
   } catch (err) {
@@ -46,6 +46,7 @@ const login = async function (req, res) {
 //logout
 const logout = async function (req, res) {
   try {
+    req.user = null;
     res.status(200).json();
   } catch (err) {
     res.status(500).json("internal server error");
