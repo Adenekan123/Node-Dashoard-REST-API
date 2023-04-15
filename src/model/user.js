@@ -55,12 +55,17 @@ const userSchema = new mongoose.Schema({
 
 userSchema.statics.findByCredentials = async function ({ email, password }) {
   const user = await this.findOne({ email });
-  console.log(user);
   if (!user) throw new Error(`User does not exist`);
   const isMatch = await bcrypt.compare(password, user.password);
 
   if (!isMatch) throw new Error(`User does not exist`);
   return user;
+};
+
+userSchema.statics.mailExist = async function ({ email }) {
+  const user = await this.findOne({ email });
+  if (user) throw new Error(`Username taken`);
+  return false;
 };
 
 userSchema.methods.toJSON = function () {

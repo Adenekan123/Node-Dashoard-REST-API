@@ -8,18 +8,21 @@ const key = "secretekey";
 //register
 const register = async function (req, res) {
   try {
-    const user = new User(req.body);
-    if (!user) throw new Error("No such user");
-    const payload = {
-      name: user.name,
-      role: "admin",
-    };
-    const token = jwt.sign(payload, "secretekey");
-    req.session.user = token;
-    await user.save();
-    res.status(200).send(request.session.sessionID);
+    const userExist = await User.mailExist(req.body);
+    if (!userExist) {
+      const user = new User(req.body);
+      if (!user) throw new Error("No such user");
+      const payload = {
+        name: user._id,
+        role: "admin",
+      };
+      const token = jwt.sign(payload, "secretekey");
+      req.user = token;
+      await user.save();
+      res.status(200).json(token);
+    }
   } catch (err) {
-    res.status(500).json();
+    res.status(500).json({ message: err.message });
   }
 };
 

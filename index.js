@@ -33,35 +33,6 @@ server.use(
 server.use(express.json());
 server.use(express.urlencoded({ extended: false }));
 
-// server.use(
-//   session({
-//     secret: KEY,
-//     resave: true,
-//     saveUninitialized: false,
-//     store: new MongoStore({
-//       mongoUrl: process.env.MONGO_URI || "mongodb://localhost:27017/dashboard",
-//       ttl: 24 * 60 * 60,
-//       autoRemove: "native",
-//     }),
-//     cookie: {
-//       httpOnly: false,
-//       maxAge: 1000 * 24 * 60 * 60,
-//       secure: true,
-//     },
-//   })
-// );
-
-// var whitelist = [
-//   "https://dorfville.cyclic.app",
-//   "https://dorfvilleadmin.netlify.app",
-//   "http://localhost:3001",
-//   "http://localhost:3000",
-// ];
-// var corsOptions = {
-//   origin: whitelist,
-//   methods: ["POST", "PUT", "GET", "PATCH", "OPTIONS", "HEAD", "DELETE"],
-// };
-
 server.use(helmet());
 server.use(xss());
 server.use(function (req, res, next) {
