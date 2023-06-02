@@ -2,6 +2,8 @@ const express = require("express");
 const { validateUser } = require("../utils/utils");
 const multer = require("multer");
 const Imagekit = require('imagekit');
+require('dotenv').config()
+
 
 
 
@@ -15,7 +17,6 @@ const imagekit = new Imagekit({
 
 const uploadToImageKit = async (req,res,next) =>{
   const file = req.file
-  
   try{
     const response = await imagekit.upload({
       file : file.buffer.toString('base64'), //required

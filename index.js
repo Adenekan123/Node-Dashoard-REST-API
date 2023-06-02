@@ -1,7 +1,5 @@
-const { urlencoded } = require("express");
+require('dotenv').config()
 const cors = require("cors");
-const xss = require("xss-clean");
-const helmet = require("helmet");
 const express = require("express");
 // const session = require("express-session");
 // const MongoStore = require("connect-mongo");
@@ -20,6 +18,9 @@ const careerRouter = require("./src/routes/career");
 const dashboardRouter = require("./src/routes/dashboard");
 
 const server = express();
+server.use(express.urlencoded({extended:true}));
+server.use(express.json());
+
 server.use(
   cors({
     origin: [
@@ -30,20 +31,8 @@ server.use(
     optionsSuccessStatus: 200,
   })
 );
-server.use(express.json());
-server.use(express.urlencoded({ extended: false }));
 
-server.use(helmet());
-server.use(xss());
-server.use(function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  );
-  res.header("Access-Control-Expose-Headers", "X-Total-Count, Content-Range");
-  next();
-});
+
 server.use("/auth", authRouter);
 server.use("/api", userRouter);
 server.use("/posts", postRouter);

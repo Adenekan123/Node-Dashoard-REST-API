@@ -1,19 +1,17 @@
 //models
 const Post = require("../model/post");
+const { deleteFromImageKit } = require("../utils/imagekit");
 
 //user profile
 
 const addPost = async (req, res) => {
-  const { title, body } = req.body;
-
+  const { title, body,image,pdf } = req.body;
   try {
     const newposts = new Post({
       title,
       body,
-      image: {
-        data: req.file.buffer,
-        contentType: req.file.mimetype,
-      },
+      image,
+      pdf
     });
     const savedPost = await newposts.save();
     res.status(201).json(savedPost);
@@ -28,18 +26,24 @@ const getPosts = async (req, res) => {
     const posts = await Post.find();
     if (!posts) return res.status(404).json();
 
-    const data = posts.map((post) => {
-      const item = post.toJSON();
-      if (item.image) {
-        item.image = {
-          data: item.image.data.toString("base64"),
-          contentType: item.image.contentType,
-        };
-      }
-      return item;
-    });
+    // const data = posts.map((post) => {
+    //   const item = post.toJSON();
+    //   if (item.image) {
+    //     item.image = {
+    //       data: item.image.data.toString("base64"),
+    //       contentType: item.image.contentType,
+    //     };
+    //   }
+    //   if (item.pdf) {
+    //     item.pdf = {
+    //       data: item.pdf.data.toString("base64"),
+    //       contentType: item.pdf.contentType,
+    //     };
+    //   }
+    //   return item;
+    // });
 
-    res.status(200).json(data);
+    res.status(200).json(posts);
   } catch (e) {
     console.log(e);
     res.status(500).json();
@@ -71,6 +75,9 @@ const deletePost = async (req, res) => {
       return res.status(404).json({ message: "Post not found" });
     }
 
+     await deleteFromImageKit(post.image.id);
+     await deleteFromImageKit(post.pdf.id);
+
     // Delete the post and return a success message
     const removedpost = await post.remove();
     res.json(removedpost);
@@ -82,24 +89,23 @@ const deletePost = async (req, res) => {
 
 const updatePost = async (req, res) => {
   const { id } = req.params;
-  const { title, body } = req.body;
+  const { title, body,image,pdf } = req.body;
   try {
     const post = await Post.findById(id);
-
+  
     if (!post) {
       return res.status(404).json({ message: "Post not found" });
     }
 
+
+    if(image && image.url) await deleteFromImageKit(post.image.id);
+    if(pdf && pdf.url) await deleteFromImageKit(post.pdf.id);
+
     post.title = title;
     post.body = body;
+    post.image = image;
+    post.pdf = pdf;
     post.updatedAt = Date.now();
-
-    if (req.file) {
-      post.image = {
-        data: req.file.buffer,
-        contentType: req.file.mimetype,
-      };
-    }
 
     const updatedPost = await post.save();
     res.json(updatedPost);

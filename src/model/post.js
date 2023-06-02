@@ -16,7 +16,9 @@ const postSchema = new mongoose.Schema({
   },
   image: {
     type: Object, // Storing image as binary data
-    required: true,
+  },
+  pdf: {
+    type: Object, // Storing pdf as binary data
   },
   createdAt: {
     type: Date,
