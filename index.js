@@ -23,10 +23,9 @@ server.use(express.json());
 
 server.use(
   cors({
-    origin: [
-      process.env.ADMIN_URL,
-      process.env.CLIENT_URL
-    ],
+    origin:'*',
+    preflightContinue:true,
+    allowedHeaders: ['Content-Type', 'Authorization'],
     methods: ["POST", "PUT", "GET", "PATCH", "OPTIONS", "HEAD", "DELETE"],
     optionsSuccessStatus: 200,
   })
