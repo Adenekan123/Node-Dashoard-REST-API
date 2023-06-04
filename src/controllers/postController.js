@@ -97,15 +97,14 @@ const updatePost = async (req, res) => {
       return res.status(404).json({ message: "Post not found" });
     }
 
-
-    if(image && image.url) await deleteFromImageKit(post.image.id);
-    if(pdf && pdf.url) await deleteFromImageKit(post.pdf.id);
+    if(image && image.url && post.image) await deleteFromImageKit(post.image.id);
+    if(pdf && pdf.url && post.pdf) await deleteFromImageKit(post.pdf.id);
 
     post.title = title;
     post.body = body;
-    post.image = image;
-    post.pdf = pdf;
     post.updatedAt = Date.now();
+    if(image)post.image = image;
+    if(pdf)post.pdf = pdf;
 
     const updatedPost = await post.save();
     res.json(updatedPost);

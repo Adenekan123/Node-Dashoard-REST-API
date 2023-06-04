@@ -9,7 +9,7 @@ const upload = multer({
     fileSize: 1024 * 1024 * 100, // 5 MB
   },
   fileFilter: (req, file, cb) => {
-    if (!file.mimetype) {
+    if (!file || !file.mimetype) {
       cb("Please upload an image file",true);
     } else {
       cb(null, true);
